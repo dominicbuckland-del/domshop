@@ -240,8 +240,74 @@ export default function Home() {
         </AnimatePresence>
       </div>
 
+      {/* Build your own */}
+      <section className="mt-16 border border-border rounded-lg p-6 bg-surface">
+        <h2 className="text-sm font-medium mb-2">Want your own?</h2>
+        <p className="text-xs text-subtle leading-relaxed mb-4">
+          I built this in a single session with Claude Code. The entire store -- algorithm, data pipeline
+          documentation, product curation, deployment -- was built conversationally by describing what
+          I wanted and having an AI build it in real time. You can do the same thing.
+        </p>
+
+        <div className="space-y-3 mb-6">
+          <div className="flex gap-3">
+            <span className="text-[10px] font-mono text-muted w-8 flex-shrink-0 pt-0.5">01</span>
+            <div>
+              <p className="text-xs font-medium">Install Claude Code</p>
+              <p className="text-[11px] text-muted mt-0.5">
+                <code className="bg-bg px-1.5 py-0.5 rounded border border-border font-mono">npm i -g @anthropic-ai/claude-code</code> then run <code className="bg-bg px-1.5 py-0.5 rounded border border-border font-mono">claude</code> in your terminal.
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <span className="text-[10px] font-mono text-muted w-8 flex-shrink-0 pt-0.5">02</span>
+            <div>
+              <p className="text-xs font-medium">Describe your store</p>
+              <p className="text-[11px] text-muted mt-0.5">
+                Tell Claude what you want: your niche, your products, your aesthetic. It builds the entire Next.js site, Tailwind styling, and deploys to Vercel.
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <span className="text-[10px] font-mono text-muted w-8 flex-shrink-0 pt-0.5">03</span>
+            <div>
+              <p className="text-xs font-medium">Add your data sources</p>
+              <p className="text-[11px] text-muted mt-0.5">
+                Connect your Strava, Spotify, bookmarks, purchase history -- whatever signals make sense for your life. The algorithm is just a weighted scoring model you describe in plain English.
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <span className="text-[10px] font-mono text-muted w-8 flex-shrink-0 pt-0.5">04</span>
+            <div>
+              <p className="text-xs font-medium">Ship it</p>
+              <p className="text-[11px] text-muted mt-0.5">
+                Claude deploys to Vercel for free. Point your domain. Done. Total cost: $0 for hosting, ~$15 for a domain.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex gap-3">
+          <a
+            href="mailto:dom@dombuckland.com?subject=Build me a dom.shop&body=Hey Dom, I want my own curated store. Here's what I'm into:"
+            className="text-xs font-mono bg-accent text-white px-4 py-2 rounded-full hover:bg-primary transition-colors"
+          >
+            get Dom to build yours
+          </a>
+          <a
+            href="https://github.com/dominicbuckland-del/domshop"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-mono text-muted border border-border px-4 py-2 rounded-full hover:text-primary hover:border-muted transition-colors"
+          >
+            fork the repo
+          </a>
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer className="mt-16 pt-8 border-t border-border">
+      <footer className="mt-10 pt-8 border-t border-border">
         <p className="text-xs text-muted">
           {products.length} items. Algorithm-surfaced, manually approved.
           Built with Claude Code as part of a thesis on hyper-personalised commerce.
