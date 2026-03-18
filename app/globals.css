@@ -2,12 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-bg: #fbfbfd;
+  --color-primary: #1d1d1f;
+  --color-secondary: #86868b;
+  --color-tertiary: #6e6e73;
+  --color-accent: #0071e3;
+  --color-border: #d2d2d7;
+  --color-surface: #f5f5f7;
+  --color-card: #ffffff;
+}
+
 @layer base {
   body {
     @apply bg-bg text-primary;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   ::selection {
     @apply bg-accent text-white;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(180deg, #1d1d1f 0%, #6e6e73 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass {
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    background-color: rgba(251, 251, 253, 0.72);
+  }
+
+  .glass-dark {
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    background-color: rgba(29, 29, 31, 0.72);
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 }
