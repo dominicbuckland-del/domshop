@@ -6,10 +6,11 @@ export interface Product {
   whyILikeIt: string
   price: number // cents
   currency: string
-  link: string // affiliate or direct link to buy
+  link: string
   category: string
-  image?: string
+  image: string
   tags: string[]
+  signalSource?: string // which data source surfaced this
 }
 
 export const categories = [
@@ -33,9 +34,11 @@ export const products: Product[] = [
     whyILikeIt: 'Makes better coffee than machines 10x the price. Unbreakable, fits in a bag, and takes 60 seconds. I have used this every single morning for 3 years.',
     price: 5495,
     currency: 'AUD',
-    link: '#',
+    link: 'https://aeropress.com/products/aeropress-original',
     category: 'coffee',
+    image: 'https://images.unsplash.com/photo-1572286258217-40142c1c2554?w=400&h=400&fit=crop',
     tags: ['daily-use', 'travel'],
+    signalSource: 'inventory-scan',
   },
   {
     id: '2',
@@ -45,9 +48,11 @@ export const products: Product[] = [
     whyILikeIt: 'I wear these 8+ hours a day. The noise cancelling turns any space into a studio. Comfortable enough to forget you are wearing them. Battery lasts days.',
     price: 39900,
     currency: 'AUD',
-    link: '#',
+    link: 'https://store.sony.com.au/product/wh-1000xm5',
     category: 'tech',
+    image: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=400&h=400&fit=crop',
     tags: ['daily-use', 'work'],
+    signalSource: 'spotify-listening-hours',
   },
   {
     id: '3',
@@ -57,9 +62,11 @@ export const products: Product[] = [
     whyILikeIt: 'Holds 4 cards and some cash. That is all you need. Australian-made, ages beautifully, and you stop sitting on a brick.',
     price: 9900,
     currency: 'AUD',
-    link: '#',
+    link: 'https://bellroy.com/products/slim-sleeve-wallet',
     category: 'edc',
+    image: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=400&h=400&fit=crop',
     tags: ['daily-use', 'australian'],
+    signalSource: 'inventory-scan',
   },
   {
     id: '4',
@@ -69,9 +76,11 @@ export const products: Product[] = [
     whyILikeIt: 'Fresh ground coffee for under $100. Consistent grind, fast, quiet enough for early mornings. Pairs perfectly with the Aeropress.',
     price: 8900,
     currency: 'AUD',
-    link: '#',
+    link: 'https://www.timemore.com/products/chestnut-c2',
     category: 'coffee',
+    image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop',
     tags: ['daily-use', 'travel'],
+    signalSource: 'inventory-scan',
   },
   {
     id: '5',
@@ -81,9 +90,11 @@ export const products: Product[] = [
     whyILikeIt: 'Waterproof, weeks of battery, no notifications. The single best device for actually reading instead of scrolling. The backlight is perfect at night.',
     price: 23900,
     currency: 'AUD',
-    link: '#',
+    link: 'https://www.amazon.com.au/Kindle-Paperwhite-16-adjustable-Lockscreen/dp/B09TMN58KL',
     category: 'reads',
+    image: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=400&h=400&fit=crop',
     tags: ['daily-use', 'travel'],
+    signalSource: 'reading-history',
   },
   {
     id: '6',
@@ -93,9 +104,11 @@ export const products: Product[] = [
     whyILikeIt: 'Fits in a gym bag, works on everything from neck tension to leg day soreness. 3 speed settings, USB-C charging. I use it more than the full-size version.',
     price: 29900,
     currency: 'AUD',
-    link: '#',
+    link: 'https://www.therabody.com/au/en-au/theragun-mini.html',
     category: 'fitness',
+    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop',
     tags: ['recovery', 'travel'],
+    signalSource: 'strava-activity',
   },
   {
     id: '7',
@@ -105,9 +118,11 @@ export const products: Product[] = [
     whyILikeIt: 'Smooth, precise, cheap enough to buy in bulk. I keep one in every bag, every desk, every pocket. Nothing else comes close at this price.',
     price: 250,
     currency: 'AUD',
-    link: '#',
+    link: 'https://www.muji.com/au/products/cmdty/detail/4550344275023',
     category: 'edc',
+    image: 'https://images.unsplash.com/photo-1585336261022-680e295ce3fe?w=400&h=400&fit=crop',
     tags: ['daily-use', 'cheap'],
+    signalSource: 'inventory-scan',
   },
   {
     id: '8',
@@ -117,9 +132,11 @@ export const products: Product[] = [
     whyILikeIt: 'Lightweight, moisture-wicking, no visible branding. I own 7 of them. They work in Australian heat, under a jacket, or at the gym. $15 each.',
     price: 1490,
     currency: 'AUD',
-    link: '#',
+    link: 'https://www.uniqlo.com/au/en/products/E423525-000',
     category: 'edc',
+    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop',
     tags: ['daily-use', 'cheap'],
+    signalSource: 'inventory-scan',
   },
   {
     id: '9',
@@ -129,9 +146,11 @@ export const products: Product[] = [
     whyILikeIt: 'Sits on top of any desk, lifts your screen and keyboard to standing height in 3 seconds. No motors, no installation, works immediately.',
     price: 19900,
     currency: 'AUD',
-    link: '#',
+    link: 'https://www.officeworks.com.au/shop/officeworks/c/sit-stand-desk-converters/q/desk+converter',
     category: 'home',
+    image: 'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=400&fit=crop',
     tags: ['work', 'health'],
+    signalSource: 'screen-time-data',
   },
   {
     id: '10',
@@ -141,9 +160,11 @@ export const products: Product[] = [
     whyILikeIt: 'Read it twice. The 1% improvement framework changed how I build products and habits. Skip the summaries, read the actual book.',
     price: 2200,
     currency: 'AUD',
-    link: '#',
+    link: 'https://www.booktopia.com.au/atomic-habits-james-clear/book/9781847941831.html',
     category: 'reads',
+    image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=400&fit=crop',
     tags: ['book', 'productivity'],
+    signalSource: 'reading-history',
   },
 ]
 

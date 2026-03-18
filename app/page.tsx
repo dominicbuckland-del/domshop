@@ -2,10 +2,18 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { products, categories, type Category } from '@/data/products'
+import { dataSources, algorithmStats } from '@/data/algorithm'
+
+const statusDot: Record<string, string> = {
+  live: 'bg-green-500',
+  batch: 'bg-yellow-500',
+  manual: 'bg-blue-500',
+}
 
 export default function Home() {
   const [activeCategory, setActiveCategory] = useState<Category>('all')
   const [expandedId, setExpandedId] = useState<string | null>(null)
+  const [showAlgorithm, setShowAlgorithm] = useState(false)
 
   const filtered = activeCategory === 'all'
     ? products
@@ -14,13 +22,101 @@ export default function Home() {
   return (
     <div className="max-w-2xl mx-auto px-4 py-16 md:py-24">
       {/* Header */}
-      <header className="mb-16">
-        <h1 className="text-2xl font-medium tracking-tight">dom.shop</h1>
-        <p className="text-sm text-muted mt-2 leading-relaxed max-w-md">
-          Things I actually buy, use, and would buy again.
-          No sponsorships. No affiliate games. Just stuff that works.
+      <header className="mb-12">
+        <div className="flex items-baseline justify-between">
+          <h1 className="text-2xl font-medium tracking-tight">dom.shop</h1>
+          <button
+            onClick={() => setShowAlgorithm(!showAlgorithm)}
+            className="text-[11px] font-mono text-muted hover:text-primary border border-border px-2.5 py-1 rounded-full transition-all hover:border-muted"
+          >
+            algorithm
+          </button>
+        </div>
+        <p className="text-sm text-muted mt-3 leading-relaxed max-w-lg">
+          I built this store to practice with Claude and explore hyper-personalisation for my thesis.
+          It consists of things I buy, use and want to buy based on an algorithm which examines my
+          own life in real time.
         </p>
       </header>
+
+      {/* Algorithm panel */}
+      <AnimatePresence>
+        {showAlgorithm && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden mb-12"
+          >
+            <div className="border border-border rounded-lg p-6 bg-surface">
+              <div className="flex items-baseline justify-between mb-6">
+                <h2 className="text-sm font-medium">How this works</h2>
+                <span className="text-[10px] font-mono text-muted">updated {algorithmStats.lastUpdated}</span>
+              </div>
+
+              <p className="text-xs text-subtle leading-relaxed mb-6">
+                I photographed everything I own, catalogued it, and built a recommendation engine
+                that watches my actual life. It pulls from {algorithmStats.liveSources} live data sources,
+                cross-references {algorithmStats.totalDataPoints} data points, and surfaces products I
+                would probably buy based on what I already own, what I do, and how I spend my time.
+                The store updates itself. I just approve or reject what the algorithm finds.
+              </p>
+
+              {/* Stats */}
+              <div className="grid grid-cols-4 gap-4 mb-6 py-4 border-y border-border">
+                <div>
+                  <p className="text-lg font-medium">{algorithmStats.totalDataPoints}</p>
+                  <p className="text-[10px] font-mono text-muted">data points</p>
+                </div>
+                <div>
+                  <p className="text-lg font-medium">{algorithmStats.liveSources}</p>
+                  <p className="text-[10px] font-mono text-muted">live sources</p>
+                </div>
+                <div>
+                  <p className="text-lg font-medium">{algorithmStats.itemsScanned}</p>
+                  <p className="text-[10px] font-mono text-muted">items scanned</p>
+                </div>
+                <div>
+                  <p className="text-lg font-medium">{algorithmStats.avgConfidence}</p>
+                  <p className="text-[10px] font-mono text-muted">confidence</p>
+                </div>
+              </div>
+
+              {/* Data sources */}
+              <div className="space-y-0">
+                {dataSources.map((source, i) => (
+                  <motion.div
+                    key={source.name}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.04 }}
+                    className="py-3 border-b border-border last:border-0"
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <div className="flex items-center gap-2">
+                        <span className={`w-1.5 h-1.5 rounded-full ${statusDot[source.status]}`} />
+                        <span className="text-xs font-medium">{source.name}</span>
+                      </div>
+                      <span className="text-[10px] font-mono text-muted">{source.status}</span>
+                    </div>
+                    <p className="text-[11px] text-subtle leading-relaxed pl-3.5">{source.description}</p>
+                    <p className="text-[10px] font-mono text-muted mt-1 pl-3.5">{source.dataPoints}</p>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="mt-4 pt-4 border-t border-border">
+                <p className="text-[10px] font-mono text-muted leading-relaxed">
+                  The algorithm runs a weighted scoring model across all sources. Products are surfaced
+                  when confidence exceeds 70%. I manually approve every item before it appears here.
+                  Nothing is sponsored. The data is mine. The recommendations are for me.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Category filter */}
       <nav className="flex flex-wrap gap-2 mb-10">
@@ -55,13 +151,24 @@ export default function Home() {
                 onClick={() => setExpandedId(expandedId === product.id ? null : product.id)}
                 className="w-full text-left group"
               >
-                <div className="flex items-baseline justify-between py-4 border-b border-border group-hover:border-muted transition-colors">
-                  <div className="flex-1 min-w-0 pr-4">
-                    <div className="flex items-baseline gap-3">
-                      <span className="text-sm font-medium text-primary">{product.name}</span>
-                      <span className="text-xs font-mono text-muted">{product.category}</span>
+                <div className="flex items-center justify-between py-4 border-b border-border group-hover:border-muted transition-colors">
+                  <div className="flex items-center gap-3 flex-1 min-w-0 pr-4">
+                    {/* Product image */}
+                    <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-neutral-100">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                      />
                     </div>
-                    <p className="text-xs text-muted mt-0.5 truncate">{product.oneLiner}</p>
+                    <div className="min-w-0">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-sm font-medium text-primary">{product.name}</span>
+                        <span className="text-[10px] font-mono text-muted">{product.category}</span>
+                      </div>
+                      <p className="text-xs text-muted mt-0.5 truncate">{product.oneLiner}</p>
+                    </div>
                   </div>
                   <div className="flex items-center gap-3 flex-shrink-0">
                     <span className="text-xs font-mono text-subtle">
@@ -86,24 +193,43 @@ export default function Home() {
                     transition={{ duration: 0.2 }}
                     className="overflow-hidden"
                   >
-                    <div className="py-4 border-b border-border">
-                      <p className="text-sm text-subtle leading-relaxed">{product.whyILikeIt}</p>
-                      <div className="flex items-center gap-3 mt-4">
-                        <a
-                          href={product.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs font-mono text-primary underline underline-offset-4 hover:text-accent transition-colors"
-                        >
-                          buy it
-                        </a>
-                        <div className="flex gap-1.5">
-                          {product.tags.map(tag => (
-                            <span key={tag} className="text-[10px] font-mono text-muted px-1.5 py-0.5 bg-bg border border-border rounded">
-                              {tag}
-                            </span>
-                          ))}
+                    <div className="py-5 border-b border-border">
+                      <div className="flex gap-4">
+                        {/* Larger image */}
+                        <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-neutral-100">
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full h-full object-cover"
+                          />
                         </div>
+                        <div className="flex-1">
+                          <p className="text-sm text-subtle leading-relaxed">{product.whyILikeIt}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between mt-4">
+                        <div className="flex items-center gap-3">
+                          <a
+                            href={product.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs font-mono text-primary underline underline-offset-4 hover:text-accent transition-colors"
+                          >
+                            buy it &rarr;
+                          </a>
+                          <div className="flex gap-1.5">
+                            {product.tags.map(tag => (
+                              <span key={tag} className="text-[10px] font-mono text-muted px-1.5 py-0.5 bg-bg border border-border rounded">
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        {product.signalSource && (
+                          <span className="text-[10px] font-mono text-muted">
+                            via {product.signalSource}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </motion.div>
@@ -117,7 +243,8 @@ export default function Home() {
       {/* Footer */}
       <footer className="mt-16 pt-8 border-t border-border">
         <p className="text-xs text-muted">
-          {products.length} items curated by Dom. Updated when something earns its spot or loses it.
+          {products.length} items. Algorithm-surfaced, manually approved.
+          Built with Claude Code as part of a thesis on hyper-personalised commerce.
         </p>
       </footer>
     </div>
