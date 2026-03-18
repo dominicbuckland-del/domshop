@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { products, categories, type Category } from '@/data/products'
@@ -19,6 +19,25 @@ export default function Home() {
   const [feedbackText, setFeedbackText] = useState('')
   const [feedbackLog, setFeedbackLog] = useState<Record<string, string>>({})
   const [hiddenIds, setHiddenIds] = useState<Set<string>>(new Set())
+  const [installPrompt, setInstallPrompt] = useState<any>(null)
+  const [showInstallBanner, setShowInstallBanner] = useState(false)
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      e.preventDefault()
+      setInstallPrompt(e)
+      setShowInstallBanner(true)
+    }
+    window.addEventListener('beforeinstallprompt', handler)
+    return () => window.removeEventListener('beforeinstallprompt', handler)
+  }, [])
+
+  const handleInstall = async () => {
+    if (!installPrompt) return
+    installPrompt.prompt()
+    setShowInstallBanner(false)
+    setInstallPrompt(null)
+  }
 
   const submitFeedback = (productId: string) => {
     if (!feedbackText.trim()) return
@@ -71,6 +90,20 @@ export default function Home() {
           </div>
         </div>
       </header>
+
+      {/* Install banner */}
+      {showInstallBanner && (
+        <div className="mb-8 flex items-center justify-between px-4 py-3 bg-neutral-900 text-white rounded-lg">
+          <div>
+            <p className="text-sm font-medium">Install iDentity</p>
+            <p className="text-[11px] text-neutral-400">Add to your home screen for instant access</p>
+          </div>
+          <div className="flex gap-2">
+            <button onClick={() => setShowInstallBanner(false)} className="text-[11px] text-neutral-400 px-3 py-1.5">later</button>
+            <button onClick={handleInstall} className="text-[11px] font-medium bg-white text-black px-3 py-1.5 rounded-md">install</button>
+          </div>
+        </div>
+      )}
 
       {/* Algorithm panel */}
       <AnimatePresence>

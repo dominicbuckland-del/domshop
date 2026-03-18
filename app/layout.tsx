@@ -1,6 +1,7 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
+import { PWARegister } from './pwa-register'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -15,16 +16,34 @@ const geistMono = localFont({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://iusedmyowndatatoadvertisetomyself.com'),
-  title: 'i used my own data to advertise to myself',
-  description: 'Every platform captures your data and sells it back to you as ads. I ran the same process in reverse. An algorithm trained on one person, recommending things for that person only. Open source.',
+  metadataBase: new URL('https://dom-shop-au.vercel.app'),
+  title: 'iDentity',
+  description: 'Your data. Your algorithm. Your store. An inversion of the global advertising model.',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'iDentity',
+  },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#000000',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+        <link rel="apple-touch-icon" href="/icon-192.png" />
+      </head>
       <body className="min-h-screen bg-bg text-primary antialiased font-sans">
         {children}
+        <PWARegister />
       </body>
     </html>
   )
