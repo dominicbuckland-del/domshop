@@ -167,7 +167,7 @@ export default function Home() {
             {user ? user.email?.split('@')[0] : 'iDentity'}
           </h1>
           <p className="text-[16px] sm:text-[18px] md:text-[24px] lg:text-[28px] font-medium text-muted mt-3 md:mt-4 tracking-tight">
-            Your taste. Your data. Your store.
+            Your data. Your store.
           </p>
         </motion.div>
 
@@ -765,7 +765,7 @@ export default function Home() {
         <div className="max-w-[1440px] mx-auto px-5 md:px-16 py-8 md:py-12">
           <div className="text-center">
             <p className="text-[15px] md:text-[17px] text-subtle leading-relaxed max-w-xl mx-auto">
-              iDentity is not an Apple product. It is what Apple promised and never delivered.
+              iDentity is not an apple product 😉
             </p>
             <p className="text-[12px] md:text-[13px] text-muted mt-3 md:mt-4">
               {products.length} items. Algorithm-surfaced, manually approved. Open source.
