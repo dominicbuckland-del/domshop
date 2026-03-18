@@ -15,6 +15,16 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState<Category>('all')
   const [expandedId, setExpandedId] = useState<string | null>(null)
   const [showAlgorithm, setShowAlgorithm] = useState(false)
+  const [feedbackId, setFeedbackId] = useState<string | null>(null)
+  const [feedbackText, setFeedbackText] = useState('')
+  const [feedbackLog, setFeedbackLog] = useState<Record<string, string>>({})
+
+  const submitFeedback = (productId: string) => {
+    if (!feedbackText.trim()) return
+    setFeedbackLog(prev => ({ ...prev, [productId]: feedbackText.trim() }))
+    setFeedbackText('')
+    setFeedbackId(null)
+  }
 
   const filtered = activeCategory === 'all'
     ? products
@@ -271,6 +281,56 @@ export default function Home() {
                         <div className="p-3 bg-neutral-50 rounded-lg border border-neutral-200 mb-4">
                           <p className="text-[10px] font-mono text-neutral-400 mb-1">why the algorithm surfaced this</p>
                           <p className="text-[12px] text-neutral-600 leading-relaxed">{product.recommendedBecause}</p>
+                        </div>
+
+                        {/* Feedback section */}
+                        <div className="p-3 bg-neutral-50 rounded-lg border border-neutral-200 mb-4">
+                          {feedbackLog[product.id] ? (
+                            <div>
+                              <p className="text-[10px] font-mono text-emerald-600 mb-1">your correction (saved)</p>
+                              <p className="text-[12px] text-neutral-600 leading-relaxed">{feedbackLog[product.id]}</p>
+                              <button
+                                onClick={(e) => { e.stopPropagation(); setFeedbackLog(prev => { const next = {...prev}; delete next[product.id]; return next }); setFeedbackId(product.id) }}
+                                className="text-[10px] font-mono text-neutral-400 mt-2 underline underline-offset-2 hover:text-neutral-600"
+                              >
+                                edit
+                              </button>
+                            </div>
+                          ) : feedbackId === product.id ? (
+                            <div onClick={(e) => e.stopPropagation()}>
+                              <p className="text-[10px] font-mono text-neutral-400 mb-2">teach the algorithm</p>
+                              <textarea
+                                value={feedbackText}
+                                onChange={(e) => setFeedbackText(e.target.value)}
+                                placeholder="e.g. Wrong pick. I tried this and the quality dropped after 3 months. I switched to [product] because..."
+                                className="w-full text-[12px] text-neutral-700 bg-white border border-neutral-200 rounded-lg p-2.5 resize-none focus:outline-none focus:border-neutral-400 placeholder:text-neutral-300"
+                                rows={3}
+                                autoFocus
+                              />
+                              <div className="flex gap-2 mt-2">
+                                <button
+                                  onClick={() => submitFeedback(product.id)}
+                                  className="text-[11px] font-mono bg-neutral-900 text-white px-3 py-1 rounded-md hover:bg-neutral-800 transition-colors"
+                                >
+                                  save correction
+                                </button>
+                                <button
+                                  onClick={() => { setFeedbackId(null); setFeedbackText('') }}
+                                  className="text-[11px] font-mono text-neutral-400 px-3 py-1 hover:text-neutral-600"
+                                >
+                                  cancel
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={(e) => { e.stopPropagation(); setFeedbackId(product.id) }}
+                              className="w-full text-left"
+                            >
+                              <p className="text-[10px] font-mono text-neutral-400 mb-0.5">teach the algorithm</p>
+                              <p className="text-[11px] text-neutral-500">Wrong recommendation? Click to correct it. Your feedback trains the next version.</p>
+                            </button>
+                          )}
                         </div>
 
                         {/* Tags */}
