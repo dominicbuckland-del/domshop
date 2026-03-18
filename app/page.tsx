@@ -292,8 +292,91 @@ export default function Home() {
         </AnimatePresence>
       </div>
 
+      {/* Spotify / Listening data */}
+      <section className="mt-16 mb-16">
+        <div className="flex items-baseline justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <svg className="w-4 h-4 text-[#1DB954]" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+            </svg>
+            <h2 className="text-sm font-medium">what the algorithm hears</h2>
+          </div>
+          <span className="text-[10px] font-mono text-muted">live signal</span>
+        </div>
+
+        <p className="text-xs text-subtle leading-relaxed mb-4">
+          Spotify data feeds the taste graph. Listening patterns surface product
+          recommendations -- late-night lo-fi sessions triggered the ambient lighting
+          recommendation. High-BPM cycling playlists correlate with gear upgrades.
+          The algorithm does not understand music. It understands patterns.
+        </p>
+
+        {/* Spotify embeds */}
+        <div className="space-y-3">
+          <div className="border border-border rounded-lg overflow-hidden">
+            <iframe
+              src="https://open.spotify.com/embed/playlist/37i9dQZF1DX3rxVfibe1L0?utm_source=generator&theme=0"
+              width="100%"
+              height="152"
+              frameBorder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              className="rounded-lg"
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="border border-border rounded-lg overflow-hidden">
+              <iframe
+                src="https://open.spotify.com/embed/playlist/37i9dQZF1DWZeKCadgRdKQ?utm_source=generator&theme=0"
+                width="100%"
+                height="152"
+                frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+                className="rounded-lg"
+              />
+            </div>
+            <div className="border border-border rounded-lg overflow-hidden">
+              <iframe
+                src="https://open.spotify.com/embed/playlist/37i9dQZF1DX76Wlfdnj7AP?utm_source=generator&theme=0"
+                width="100%"
+                height="152"
+                frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+                className="rounded-lg"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* What the algorithm extracts */}
+        <div className="mt-4 p-3 bg-bg rounded border border-border">
+          <p className="text-[10px] font-mono text-muted mb-2">algorithm extraction</p>
+          <div className="grid grid-cols-3 gap-4 text-center">
+            <div>
+              <p className="text-sm font-medium">6.2h</p>
+              <p className="text-[10px] font-mono text-muted">daily avg</p>
+            </div>
+            <div>
+              <p className="text-sm font-medium">73%</p>
+              <p className="text-[10px] font-mono text-muted">instrumental</p>
+            </div>
+            <div>
+              <p className="text-sm font-medium">11pm-2am</p>
+              <p className="text-[10px] font-mono text-muted">peak hours</p>
+            </div>
+          </div>
+          <p className="text-[11px] text-subtle leading-relaxed mt-3">
+            High instrumental ratio + late-night peak = deep work pattern. The algorithm
+            used this to surface noise-cancelling headphones (correct), ambient lighting
+            (correct), and a meditation app (wrong -- the listening is the meditation).
+          </p>
+        </div>
+      </section>
+
       {/* Build yours free */}
-      <section className="mt-16 border border-border rounded-lg p-6 bg-surface">
+      <section className="border border-border rounded-lg p-6 bg-surface">
         <h2 className="text-sm font-medium mb-2">Build yours free</h2>
         <p className="text-xs text-subtle leading-relaxed mb-4">
           This is open source because the interesting part is the idea, not the store. The code
