@@ -19,25 +19,25 @@ export default function Home() {
   const [feedbackText, setFeedbackText] = useState('')
   const [feedbackLog, setFeedbackLog] = useState<Record<string, string>>({})
   const [hiddenIds, setHiddenIds] = useState<Set<string>>(new Set())
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [installPrompt, setInstallPrompt] = useState<Record<string, unknown> | null>(null)
   const [showInstallBanner, setShowInstallBanner] = useState(false)
+  const installPromptRef = { current: null as Event | null }
 
   useEffect(() => {
     const handler = (e: Event) => {
       e.preventDefault()
-      setInstallPrompt(e)
+      installPromptRef.current = e
       setShowInstallBanner(true)
     }
     window.addEventListener('beforeinstallprompt', handler)
     return () => window.removeEventListener('beforeinstallprompt', handler)
-  }, [])
+  })
 
-  const handleInstall = async () => {
-    if (!installPrompt) return
-    (installPrompt as { prompt: () => void }).prompt()
+  const handleInstall = () => {
+    const prompt = installPromptRef.current
+    if (!prompt) return
+    (prompt as unknown as { prompt: () => void }).prompt()
     setShowInstallBanner(false)
-    setInstallPrompt(null)
+    installPromptRef.current = null
   }
 
   const submitFeedback = (productId: string) => {
