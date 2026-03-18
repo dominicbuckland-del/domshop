@@ -37,7 +37,7 @@ export default function Home() {
       {/* Header */}
       <header className="mb-12">
         <div className="flex items-baseline justify-between">
-          <h1 className="text-lg font-medium tracking-tight">i used my own data to advertise to myself</h1>
+          <h1 className="text-lg font-medium tracking-tight">iDentity</h1>
           <div className="flex gap-2">
             <button
               onClick={() => setShowAlgorithm(!showAlgorithm)}
