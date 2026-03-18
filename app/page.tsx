@@ -231,7 +231,7 @@ export default function Home() {
                     className="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/40 text-white/80 flex items-center justify-center text-xs hover:bg-red-500/80 transition-colors opacity-0 group-hover:opacity-100"
                     title="Not for me"
                   >
-                    &times;
+                    {'\u00D7'}
                   </button>
                   {/* Signal source */}
                   {product.signalSource && (
