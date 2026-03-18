@@ -18,6 +18,7 @@ export default function Home() {
   const [feedbackId, setFeedbackId] = useState<string | null>(null)
   const [feedbackText, setFeedbackText] = useState('')
   const [feedbackLog, setFeedbackLog] = useState<Record<string, string>>({})
+  const [hiddenIds, setHiddenIds] = useState<Set<string>>(new Set())
 
   const submitFeedback = (productId: string) => {
     if (!feedbackText.trim()) return
@@ -26,9 +27,10 @@ export default function Home() {
     setFeedbackId(null)
   }
 
-  const filtered = activeCategory === 'all'
+  const filtered = (activeCategory === 'all'
     ? products
     : products.filter(p => p.category === activeCategory)
+  ).filter(p => !hiddenIds.has(p.id))
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-16 md:py-24">
@@ -178,6 +180,21 @@ export default function Home() {
         ))}
       </nav>
 
+      {/* Hidden items bar */}
+      {hiddenIds.size > 0 && (
+        <div className="mb-4 flex items-center justify-between px-3 py-2 bg-neutral-100 rounded-lg">
+          <p className="text-[11px] text-neutral-500 font-mono">
+            {hiddenIds.size} item{hiddenIds.size > 1 ? 's' : ''} removed -- algorithm updated
+          </p>
+          <button
+            onClick={() => setHiddenIds(new Set())}
+            className="text-[11px] font-mono text-neutral-400 underline underline-offset-2 hover:text-neutral-600"
+          >
+            restore all
+          </button>
+        </div>
+      )}
+
       {/* Product grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <AnimatePresence mode="popLayout">
@@ -208,6 +225,14 @@ export default function Home() {
                   <div className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-mono text-white ${product.ownership === 'own' ? 'bg-emerald-600/90' : 'bg-amber-500/90'}`}>
                     {product.ownership === 'own' ? 'own' : 'want'}
                   </div>
+                  {/* Remove button */}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setHiddenIds(prev => new Set([...prev, product.id])) }}
+                    className="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/40 text-white/80 flex items-center justify-center text-xs hover:bg-red-500/80 transition-colors opacity-0 group-hover:opacity-100"
+                    title="Not for me"
+                  >
+                    &times;
+                  </button>
                   {/* Signal source */}
                   {product.signalSource && (
                     <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded-full text-[9px] font-mono text-white/80 bg-black/50 backdrop-blur-sm">
