@@ -44,11 +44,9 @@ export default function Home() {
           </div>
         </div>
         <p className="text-sm text-muted mt-3 leading-relaxed max-w-lg">
-          I built this store to practice with Claude and explore hyper-personalisation -- because
-          that is where things are going. In a marketing sense it is pretty pointless. It caters
-          to me and my specific interests only. But it is fun. I took photos of everything I own,
-          converted it into a store, and an algorithm populates new products I might like based on
-          what I already use. Think of it as a living catalogue of one person&#39;s taste.
+          I built this store to explore an inversion of the global advertising model and how people
+          could seek to reclaim ownership over their data and identity in an increasingly
+          AI-dominated future. Nothing here is actually for sale.
         </p>
         <div className="flex gap-3 mt-4 text-[11px] font-mono text-muted">
           <Link href="/about" className="hover:text-primary transition-colors underline underline-offset-4">about</Link>
