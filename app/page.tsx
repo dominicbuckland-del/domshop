@@ -125,39 +125,56 @@ export default function Home() {
       </nav>
 
       {/* ── Hero ────────────────────────────────────────────── */}
-      <section className="pt-20 pb-8 px-6">
-        <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-[48px] md:text-[64px] font-semibold tracking-tight leading-[1.05] text-primary">
-            {user ? `${user.email?.split('@')[0]}'s` : 'Your data.'}<br />
-            {user ? 'Store.' : 'Your store.'}
+      <section className="pt-24 md:pt-32 pb-6 px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <h1 className="text-[56px] md:text-[80px] lg:text-[96px] font-semibold tracking-[-0.03em] leading-[1.0] text-primary">
+            {user ? `${user.email?.split('@')[0]}.` : 'Advertise to yourself.'}
           </h1>
-          <p className="text-[19px] md:text-[21px] text-muted mt-5 leading-relaxed max-w-lg mx-auto font-light">
-            An inversion of the global advertising model. Algorithm-curated, manually approved.
-            Nothing here is for sale.
+          <p className="text-[17px] md:text-[19px] text-subtle mt-6 leading-[1.6] max-w-2xl mx-auto">
+            This is both a functional app and a creative commentary on data, privacy and identity.
+            8 years ago as a postgrad, I contributed to a thesis titled &#39;AI: Privacy and Ethics&#39;.
+            Boy has that aged well.
           </p>
-          {isDemo && (
-            <div className="mt-8 flex items-center justify-center gap-4">
-              <Link
-                href="/login"
-                className="inline-flex items-center justify-center h-11 px-6 rounded-full bg-accent text-white text-[15px] font-medium hover:bg-accent/90 transition-colors"
-              >
-                Create Your Own
-              </Link>
-              <a
-                href="https://github.com/dominicbuckland-del/domshop"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center h-11 px-6 rounded-full text-accent text-[15px] font-medium hover:text-accent/80 transition-colors"
-              >
-                View Source
-              </a>
-            </div>
-          )}
-          {isDemo && (
-            <p className="text-[13px] text-muted/60 mt-4">
-              Viewing Dom&#39;s store as a demo
-            </p>
-          )}
+          <p className="text-[17px] md:text-[19px] text-subtle mt-4 leading-[1.6] max-w-2xl mx-auto">
+            Having spent my career working across creative and technical disciplines of marketing,
+            I thought it would be interesting to double down on hyper-personalisation and apply
+            interest-based targeting to a singular consumer, myself. Same tools, integrations,
+            depth of data capture, but purely for my own benefit.
+          </p>
+          <p className="text-[17px] md:text-[19px] text-subtle mt-4 leading-[1.6] max-w-2xl mx-auto">
+            This tool is now a living breathing metaphor for how influenced we all are by product
+            marketing, trends, seasons and other people. It is also a fully functional application
+            with a range of tools you can use to curate the best advertising system (for you) of all time.
+          </p>
+
+          <div className="mt-10 flex items-center justify-center">
+            <Link
+              href="/login"
+              className="inline-flex items-center justify-center h-12 px-8 rounded-full bg-accent text-white text-[17px] font-medium hover:bg-accent/90 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Create your own
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Apple-style spec callouts ─────────────────────── */}
+      <section className="py-12 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-0 border-y border-border/40">
+            {[
+              { value: '2,847', label: 'data points', sub: 'All yours.' },
+              { value: '6', label: 'live sources', sub: 'Zero third parties.' },
+              { value: '41', label: 'items curated', sub: 'Every one matched to you.' },
+              { value: '0', label: 'brands paid', sub: 'Not one.' },
+            ].map((stat, i) => (
+              <div key={stat.label} className={`py-8 text-center ${i < 3 ? 'border-r border-border/40 hidden md:block' : ''} ${i < 2 ? 'border-r border-border/40 md:border-r' : ''}`}>
+                <p className="text-[40px] md:text-[48px] font-semibold tracking-tight text-primary leading-none">{stat.value}</p>
+                <p className="text-[13px] text-muted mt-2 uppercase tracking-wider">{stat.label}</p>
+                <p className="text-[14px] text-subtle mt-1">{stat.sub}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -167,7 +184,7 @@ export default function Home() {
           <div className="flex items-center justify-between px-5 py-4 bg-card rounded-2xl shadow-sm border border-border/40">
             <div>
               <p className="text-[15px] font-medium text-primary">Install iDentity</p>
-              <p className="text-[13px] text-muted mt-0.5">Add to your home screen for instant access</p>
+              <p className="text-[13px] text-muted mt-0.5">Add to your home screen, connect your systems and build your own store.</p>
             </div>
             <div className="flex gap-2">
               <button
@@ -653,9 +670,11 @@ export default function Home() {
       <footer className="border-t border-border/40 bg-surface">
         <div className="max-w-5xl mx-auto px-6 py-8">
           <div className="text-center">
-            <p className="text-[13px] text-muted leading-relaxed max-w-lg mx-auto">
+            <p className="text-[15px] text-subtle leading-relaxed max-w-xl mx-auto">
+              iDentity is not an Apple product. It is what Apple promised and never delivered.
+            </p>
+            <p className="text-[13px] text-muted mt-3">
               {products.length} items. Algorithm-surfaced, manually approved. Open source.
-              No brand paid for placement.
             </p>
             <div className="flex justify-center gap-6 mt-4 text-[13px] text-muted">
               <Link href="/about" className="hover:text-primary transition-colors">About</Link>
