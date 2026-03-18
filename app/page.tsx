@@ -82,6 +82,7 @@ export default function Home() {
     : products.filter(p => p.category === activeCategory)
   ).filter(p => !hiddenIds.has(p.id))
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isDemo = !user
 
   return (
