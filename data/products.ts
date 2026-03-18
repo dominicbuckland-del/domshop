@@ -11,6 +11,8 @@ export interface Product {
   image: string
   tags: string[]
   signalSource?: string // which data source surfaced this
+  type: 'dropship' | 'affiliate'
+  recommendedBecause: string // editorial: why the algorithm surfaced it and whether Dom agrees
 }
 
 export const categories = [
@@ -39,6 +41,8 @@ export const products: Product[] = [
     image: 'https://images.unsplash.com/photo-1572286258217-40142c1c2554?w=400&h=400&fit=crop',
     tags: ['daily-use', 'travel'],
     signalSource: 'inventory-scan',
+    type: 'affiliate',
+    recommendedBecause: 'Inventory scan flagged this as the most-used kitchen item by frequency. The algorithm is correct -- I use it every day. No notes.',
   },
   {
     id: '2',
@@ -53,6 +57,8 @@ export const products: Product[] = [
     image: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=400&h=400&fit=crop',
     tags: ['daily-use', 'work'],
     signalSource: 'spotify-listening-hours',
+    type: 'affiliate',
+    recommendedBecause: 'Spotify data shows 6+ hours of daily listening. The algorithm surfaced headphone upgrades. I already own these -- they are the reason the listening hours are so high.',
   },
   {
     id: '3',
@@ -67,6 +73,8 @@ export const products: Product[] = [
     image: 'https://images.unsplash.com/photo-1627123424574-724758594e93?w=400&h=400&fit=crop',
     tags: ['daily-use', 'australian'],
     signalSource: 'inventory-scan',
+    type: 'affiliate',
+    recommendedBecause: 'Inventory scan tagged the old wallet as worn-out. The algorithm recommended Bellroy based on Australian brand preference and minimalist pattern. Correct call -- bought it, kept it.',
   },
   {
     id: '4',
@@ -81,6 +89,8 @@ export const products: Product[] = [
     image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=400&fit=crop',
     tags: ['daily-use', 'travel'],
     signalSource: 'inventory-scan',
+    type: 'affiliate',
+    recommendedBecause: 'The algorithm paired this with the Aeropress usage. Technically correct -- if you use one daily, the grinder is obvious. I already owned it before the algorithm existed.',
   },
   {
     id: '5',
@@ -95,6 +105,8 @@ export const products: Product[] = [
     image: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=400&h=400&fit=crop',
     tags: ['daily-use', 'travel'],
     signalSource: 'reading-history',
+    type: 'affiliate',
+    recommendedBecause: 'Reading history shows 30+ books/year. The algorithm recommended a Kindle upgrade. I was already on my second Paperwhite by then. The data confirmed the habit, not the other way around.',
   },
   {
     id: '6',
@@ -109,6 +121,8 @@ export const products: Product[] = [
     image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=400&fit=crop',
     tags: ['recovery', 'travel'],
     signalSource: 'strava-activity',
+    type: 'affiliate',
+    recommendedBecause: 'Strava data showed increased running volume. The algorithm surfaced recovery tools. This one was a genuine discovery -- I would not have found it without the recommendation.',
   },
   {
     id: '7',
@@ -123,6 +137,8 @@ export const products: Product[] = [
     image: 'https://images.unsplash.com/photo-1585336261022-680e295ce3fe?w=400&h=400&fit=crop',
     tags: ['daily-use', 'cheap'],
     signalSource: 'inventory-scan',
+    type: 'affiliate',
+    recommendedBecause: 'Inventory scan found 12 of these across different locations. The algorithm correctly identified it as a bulk-buy essential. Agreed -- I reorder every 3 months.',
   },
   {
     id: '8',
@@ -137,6 +153,8 @@ export const products: Product[] = [
     image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop',
     tags: ['daily-use', 'cheap'],
     signalSource: 'inventory-scan',
+    type: 'affiliate',
+    recommendedBecause: 'The algorithm flagged 7 identical items in the inventory. Pattern: buy cheap basics in bulk, replace annually. It also recommended Uniqlo U tees -- I said no, the Airism is better for heat.',
   },
   {
     id: '9',
@@ -151,6 +169,8 @@ export const products: Product[] = [
     image: 'https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=400&fit=crop',
     tags: ['work', 'health'],
     signalSource: 'screen-time-data',
+    type: 'affiliate',
+    recommendedBecause: 'Screen time data showed 10+ hours seated daily. The algorithm recommended ergonomic gear. It also suggested a Herman Miller -- technically correct but I do not spend $2k on a chair. The converter was the right call.',
   },
   {
     id: '10',
@@ -165,6 +185,8 @@ export const products: Product[] = [
     image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400&h=400&fit=crop',
     tags: ['book', 'productivity'],
     signalSource: 'reading-history',
+    type: 'affiliate',
+    recommendedBecause: 'Claude conversation history showed repeated references to habit systems. The algorithm surfaced this. I had already read it twice -- but it confirmed the book genuinely stuck, not just performative reading.',
   },
 ]
 

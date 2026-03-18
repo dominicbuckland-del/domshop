@@ -1,8 +1,9 @@
 'use client'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
 import { products, categories, type Category } from '@/data/products'
-import { dataSources, algorithmStats } from '@/data/algorithm'
+import { algorithmLevels, algorithmStats } from '@/data/algorithm'
 
 const statusDot: Record<string, string> = {
   live: 'bg-green-500',
@@ -24,7 +25,7 @@ export default function Home() {
       {/* Header */}
       <header className="mb-12">
         <div className="flex items-baseline justify-between">
-          <h1 className="text-2xl font-medium tracking-tight">dom.shop</h1>
+          <h1 className="text-lg font-medium tracking-tight">i used my own data to advertise to myself</h1>
           <div className="flex gap-2">
             <button
               onClick={() => setShowAlgorithm(!showAlgorithm)}
@@ -38,16 +39,21 @@ export default function Home() {
               rel="noopener noreferrer"
               className="text-[11px] font-mono bg-accent text-white px-2.5 py-1 rounded-full transition-all hover:bg-primary"
             >
-              build your own
+              build yours free
             </a>
           </div>
         </div>
         <p className="text-sm text-muted mt-3 leading-relaxed max-w-lg">
-          An open-source experiment in using personal data to understand what you actually need --
-          not what an ad tells you to want. This is my life, examined by an algorithm I built,
-          surfacing objects that genuinely fit how I live. The opposite of consumer culture.
-          The code is yours to fork.
+          I built this store to practice with Claude and explore hyper-personalisation -- because
+          that is where things are going. In a marketing sense it is pretty pointless. It caters
+          to me and my specific interests only. But it is fun. I took photos of everything I own,
+          converted it into a store, and an algorithm populates new products I might like based on
+          what I already use. Think of it as a living catalogue of one person&#39;s taste.
         </p>
+        <div className="flex gap-3 mt-4 text-[11px] font-mono text-muted">
+          <Link href="/about" className="hover:text-primary transition-colors underline underline-offset-4">about</Link>
+          <Link href="/guide" className="hover:text-primary transition-colors underline underline-offset-4">build your own</Link>
+        </div>
       </header>
 
       {/* Algorithm panel */}
@@ -67,12 +73,10 @@ export default function Home() {
               </div>
 
               <p className="text-xs text-subtle leading-relaxed mb-6">
-                Most recommendation engines exist to sell you things. This one exists to understand
-                a single person. I photographed everything I own, catalogued it, and connected
-                {' '}{algorithmStats.liveSources} live data sources that watch how I actually live -- not
-                what I click on. The goal is not consumption. It is self-awareness through objects:
-                what do I reach for, what gathers dust, and what does that say about what I should
-                own next? The entire system is open source. Fork it and point it at your own life.
+                Most people&#39;s data is being used to sell them things by someone else. You are
+                using your own data to curate things for yourself. This algorithm is trained
+                exclusively on my behaviour. No brand paid for placement. It runs the same process
+                as every ad platform -- just in reverse, for one person.
               </p>
 
               {/* Stats */}
@@ -95,35 +99,47 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Data sources */}
-              <div className="space-y-0">
-                {dataSources.map((source, i) => (
-                  <motion.div
-                    key={source.name}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.04 }}
-                    className="py-3 border-b border-border last:border-0"
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <div className="flex items-center gap-2">
-                        <span className={`w-1.5 h-1.5 rounded-full ${statusDot[source.status]}`} />
-                        <span className="text-xs font-medium">{source.name}</span>
-                      </div>
-                      <span className="text-[10px] font-mono text-muted">{source.status}</span>
+              {/* 3-level algorithm structure */}
+              <div className="space-y-8">
+                {algorithmLevels.map((level) => (
+                  <div key={level.level}>
+                    <div className="flex items-baseline gap-2 mb-2">
+                      <span className="text-[10px] font-mono text-muted">level {level.level}</span>
+                      <h3 className="text-xs font-medium">{level.title}</h3>
                     </div>
-                    <p className="text-[11px] text-subtle leading-relaxed pl-3.5">{source.description}</p>
-                    <p className="text-[10px] font-mono text-muted mt-1 pl-3.5">{source.dataPoints}</p>
-                  </motion.div>
+                    <p className="text-[11px] text-subtle leading-relaxed mb-3">{level.subtitle}</p>
+
+                    <div className="space-y-0">
+                      {level.sources.map((source, i) => (
+                        <motion.div
+                          key={source.name}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: i * 0.04 }}
+                          className="py-3 border-b border-border last:border-0"
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <div className="flex items-center gap-2">
+                              <span className={`w-1.5 h-1.5 rounded-full ${statusDot[source.status]}`} />
+                              <span className="text-xs font-medium">{source.name}</span>
+                            </div>
+                            <span className="text-[10px] font-mono text-muted">{source.status}</span>
+                          </div>
+                          <p className="text-[11px] text-subtle leading-relaxed pl-3.5">{source.description}</p>
+                          <p className="text-[10px] font-mono text-muted mt-1 pl-3.5">{source.dataPoints}</p>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
 
               <div className="mt-4 pt-4 border-t border-border">
                 <p className="text-[10px] font-mono text-muted leading-relaxed">
-                  The algorithm runs a weighted scoring model across all sources. Products surface
-                  when confidence exceeds 70%. I manually approve every item. Nothing is sponsored.
-                  No affiliate revenue. No tracking pixels. The data is mine, the code is open,
-                  and the point is to prove that personalisation can serve the person -- not the platform.
+                  Products surface when confidence exceeds 70%. I manually approve every item.
+                  Nothing is sponsored. No affiliate revenue determines placement. No tracking
+                  pixels. The data is mine, the code is open, and the point is to prove that
+                  personalisation can serve the person -- not the platform.
                 </p>
               </div>
             </div>
@@ -220,16 +236,29 @@ export default function Home() {
                           <p className="text-sm text-subtle leading-relaxed">{product.whyILikeIt}</p>
                         </div>
                       </div>
+
+                      {/* Why recommended signal */}
+                      <div className="mt-3 p-3 bg-bg rounded border border-border">
+                        <p className="text-[10px] font-mono text-muted mb-1">why recommended</p>
+                        <p className="text-[11px] text-subtle leading-relaxed">{product.recommendedBecause}</p>
+                      </div>
+
                       <div className="flex items-center justify-between mt-4">
                         <div className="flex items-center gap-3">
-                          <a
-                            href={product.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-xs font-mono text-primary underline underline-offset-4 hover:text-accent transition-colors"
-                          >
-                            buy it &rarr;
-                          </a>
+                          {product.type === 'affiliate' ? (
+                            <a
+                              href={product.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs font-mono text-primary underline underline-offset-4 hover:text-accent transition-colors"
+                            >
+                              buy it &rarr;
+                            </a>
+                          ) : (
+                            <span className="text-xs font-mono text-muted">
+                              checkout coming soon
+                            </span>
+                          )}
                           <div className="flex gap-1.5">
                             {product.tags.map(tag => (
                               <span key={tag} className="text-[10px] font-mono text-muted px-1.5 py-0.5 bg-bg border border-border rounded">
@@ -238,11 +267,16 @@ export default function Home() {
                             ))}
                           </div>
                         </div>
-                        {product.signalSource && (
+                        <div className="flex items-center gap-2">
                           <span className="text-[10px] font-mono text-muted">
-                            via {product.signalSource}
+                            {product.type}
                           </span>
-                        )}
+                          {product.signalSource && (
+                            <span className="text-[10px] font-mono text-muted">
+                              via {product.signalSource}
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -253,13 +287,16 @@ export default function Home() {
         </AnimatePresence>
       </div>
 
-      {/* Build your own */}
+      {/* Build yours free */}
       <section className="mt-16 border border-border rounded-lg p-6 bg-surface">
-        <h2 className="text-sm font-medium mb-2">Build your own</h2>
+        <h2 className="text-sm font-medium mb-2">Build yours free</h2>
         <p className="text-xs text-subtle leading-relaxed mb-4">
-          This is open source because the point is the idea, not the product. What happens
-          when you stop letting algorithms sell to you and start building algorithms that
-          understand you? Fork the repo, point it at your own data, and find out.
+          This is open source because the interesting part is the idea, not the store. The code
+          does not matter. What matters is the inversion: what happens when you stop letting
+          algorithms sell to you and start building algorithms that understand you? Every
+          platform captures your signal and sells it back to you as ads. This runs the same
+          process in reverse. Fork the repo, point it at your own data, and find out what your
+          algorithm recommends when it is working for you instead of against you.
         </p>
 
         <div className="space-y-3 mb-6">
@@ -277,7 +314,7 @@ export default function Home() {
             <div>
               <p className="text-xs font-medium">Replace the data with your life</p>
               <p className="text-[11px] text-muted mt-0.5">
-                Edit <code className="bg-bg px-1.5 py-0.5 rounded border border-border font-mono">data/products.ts</code> with things you own. Edit <code className="bg-bg px-1.5 py-0.5 rounded border border-border font-mono">data/algorithm.ts</code> with your data sources. Photograph your stuff. Be honest about what you actually use.
+                Edit <code className="bg-bg px-1.5 py-0.5 rounded border border-border font-mono">data/products.ts</code> with things you own. Photograph your stuff. Be honest about what you actually use versus what you bought and forgot about.
               </p>
             </div>
           </div>
@@ -286,7 +323,7 @@ export default function Home() {
             <div>
               <p className="text-xs font-medium">Connect your signals</p>
               <p className="text-[11px] text-muted mt-0.5">
-                Strava, Spotify, screen time, purchase history -- whatever data reflects how you actually live. The algorithm is just a mirror. The more honest the inputs, the more useful the outputs.
+                Start with Level 1 manual imports. Export your data from Spotify, Strava, Instagram, Claude, email receipts. The <Link href="/guide" className="underline underline-offset-4 hover:text-primary">guide</Link> walks through every step.
               </p>
             </div>
           </div>
@@ -295,7 +332,7 @@ export default function Home() {
             <div>
               <p className="text-xs font-medium">Deploy for free</p>
               <p className="text-[11px] text-muted mt-0.5">
-                <code className="bg-bg px-1.5 py-0.5 rounded border border-border font-mono">vercel deploy</code> -- free hosting, free SSL, instant. Or use Claude Code to build and deploy conversationally.
+                <code className="bg-bg px-1.5 py-0.5 rounded border border-border font-mono">vercel deploy</code> -- free hosting, free SSL, instant. Or use Claude Code to build and deploy the whole thing conversationally.
               </p>
             </div>
           </div>
@@ -315,8 +352,14 @@ export default function Home() {
       <footer className="mt-10 pt-8 border-t border-border">
         <p className="text-xs text-muted leading-relaxed">
           {products.length} items. Algorithm-surfaced, manually approved. Open source.
-          Built to explore whether personalisation can serve people instead of platforms.
+          An algorithm trained on one person&#39;s data, recommending things for that person only.
+          No brand paid for placement.
         </p>
+        <div className="flex gap-3 mt-3 text-[10px] font-mono text-muted">
+          <Link href="/about" className="hover:text-primary transition-colors">about</Link>
+          <Link href="/guide" className="hover:text-primary transition-colors">guide</Link>
+          <a href="https://github.com/dominicbuckland-del/domshop" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">github</a>
+        </div>
       </footer>
     </div>
   )

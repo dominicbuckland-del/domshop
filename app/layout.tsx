@@ -15,8 +15,9 @@ const geistMono = localFont({
 })
 
 export const metadata: Metadata = {
-  title: 'dom.shop -- things i actually use',
-  description: 'A hyper-curated collection of products I buy, use, and recommend. No ads, no sponsors, no bullshit.',
+  metadataBase: new URL('https://iusedmyowndatatoadvertisetomyself.com'),
+  title: 'i used my own data to advertise to myself',
+  description: 'Every platform captures your data and sells it back to you as ads. I ran the same process in reverse. An algorithm trained on one person, recommending things for that person only. Open source.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
