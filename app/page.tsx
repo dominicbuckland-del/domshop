@@ -19,7 +19,8 @@ export default function Home() {
   const [feedbackText, setFeedbackText] = useState('')
   const [feedbackLog, setFeedbackLog] = useState<Record<string, string>>({})
   const [hiddenIds, setHiddenIds] = useState<Set<string>>(new Set())
-  const [installPrompt, setInstallPrompt] = useState<any>(null)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [installPrompt, setInstallPrompt] = useState<Record<string, unknown> | null>(null)
   const [showInstallBanner, setShowInstallBanner] = useState(false)
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function Home() {
 
   const handleInstall = async () => {
     if (!installPrompt) return
-    installPrompt.prompt()
+    (installPrompt as { prompt: () => void }).prompt()
     setShowInstallBanner(false)
     setInstallPrompt(null)
   }
