@@ -168,122 +168,135 @@ export default function Home() {
         ))}
       </nav>
 
-      {/* Product list */}
-      <div className="space-y-0">
+      {/* Product grid */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <AnimatePresence mode="popLayout">
           {filtered.map((product, i) => (
             <motion.div
               key={product.id}
               layout
-              initial={{ opacity: 0, y: 8 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.3, delay: i * 0.03 }}
+              transition={{ duration: 0.3, delay: i * 0.02 }}
+              className="group"
             >
-              <button
+              {/* Product card */}
+              <div
                 onClick={() => setExpandedId(expandedId === product.id ? null : product.id)}
-                className="w-full text-left group"
+                className="cursor-pointer"
               >
-                <div className="flex items-center justify-between py-4 border-b border-border group-hover:border-muted transition-colors">
-                  <div className="flex items-center gap-3 flex-1 min-w-0 pr-4">
-                    {/* Product image */}
-                    <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0 bg-neutral-100">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${product.ownership === 'own' ? 'bg-emerald-500' : 'bg-amber-400'}`} title={product.ownership === 'own' ? 'I own this' : 'I want this'} />
-                        <span className="text-sm font-medium text-primary">{product.name}</span>
-                        <span className="text-[10px] font-mono text-muted">{product.category}</span>
-                      </div>
-                      <p className="text-xs text-muted mt-0.5 truncate">{product.oneLiner}</p>
-                    </div>
+                {/* Image */}
+                <div className="aspect-square rounded-lg overflow-hidden bg-neutral-100 relative">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                  {/* Ownership badge */}
+                  <div className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-mono text-white ${product.ownership === 'own' ? 'bg-emerald-600/90' : 'bg-amber-500/90'}`}>
+                    {product.ownership === 'own' ? 'own' : 'want'}
                   </div>
-                  <div className="flex items-center gap-3 flex-shrink-0">
-                    <span className="text-xs font-mono text-subtle">
-                      ${(product.price / 100).toFixed(product.price % 100 === 0 ? 0 : 2)}
-                    </span>
-                    <svg
-                      className={`w-3 h-3 text-muted transition-transform ${expandedId === product.id ? 'rotate-45' : ''}`}
-                      fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                    </svg>
-                  </div>
+                  {/* Signal source */}
+                  {product.signalSource && (
+                    <div className="absolute bottom-2 left-2 px-2 py-0.5 rounded-full text-[9px] font-mono text-white/80 bg-black/50 backdrop-blur-sm">
+                      via {product.signalSource}
+                    </div>
+                  )}
                 </div>
-              </button>
 
+                {/* Product info */}
+                <div className="mt-2.5">
+                  <div className="flex items-baseline justify-between">
+                    <h3 className="text-xs font-medium text-primary truncate pr-2">{product.name}</h3>
+                    {product.price > 0 && (
+                      <span className="text-[11px] font-mono text-muted flex-shrink-0">
+                        ${(product.price / 100).toFixed(product.price % 100 === 0 ? 0 : 2)}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-muted mt-0.5 line-clamp-2 leading-relaxed">{product.oneLiner}</p>
+                  <span className="text-[10px] font-mono text-muted/60 mt-1 block">{product.category}</span>
+                </div>
+              </div>
+
+              {/* Expanded detail modal */}
               <AnimatePresence>
                 {expandedId === product.id && (
                   <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="overflow-hidden"
+                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+                    onClick={(e) => { if (e.target === e.currentTarget) setExpandedId(null) }}
                   >
-                    <div className="py-5 border-b border-border">
-                      <div className="flex gap-4">
-                        {/* Larger image */}
-                        <div className="w-24 h-24 rounded-lg overflow-hidden flex-shrink-0 bg-neutral-100">
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-sm text-subtle leading-relaxed">{product.whyILikeIt}</p>
+                    <motion.div
+                      initial={{ scale: 0.95, y: 10 }}
+                      animate={{ scale: 1, y: 0 }}
+                      exit={{ scale: 0.95, y: 10 }}
+                      className="bg-white rounded-xl max-w-lg w-full max-h-[85vh] overflow-y-auto shadow-2xl"
+                    >
+                      {/* Modal image */}
+                      <div className="aspect-video w-full overflow-hidden rounded-t-xl relative">
+                        <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                        <button
+                          onClick={() => setExpandedId(null)}
+                          className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center text-sm hover:bg-black/70 transition-colors"
+                        >
+                          &times;
+                        </button>
+                        <div className={`absolute top-3 left-3 px-2.5 py-1 rounded-full text-[11px] font-mono text-white ${product.ownership === 'own' ? 'bg-emerald-600/90' : 'bg-amber-500/90'}`}>
+                          {product.ownership === 'own' ? 'i own this' : 'i want this'}
                         </div>
                       </div>
 
-                      {/* Why recommended signal */}
-                      <div className="mt-3 p-3 bg-bg rounded border border-border">
-                        <p className="text-[10px] font-mono text-muted mb-1">why recommended</p>
-                        <p className="text-[11px] text-subtle leading-relaxed">{product.recommendedBecause}</p>
-                      </div>
+                      <div className="p-5">
+                        {/* Header */}
+                        <div className="flex items-baseline justify-between mb-1">
+                          <h3 className="text-base font-medium text-neutral-900">{product.name}</h3>
+                          {product.price > 0 && (
+                            <span className="text-sm font-mono text-neutral-500">
+                              ${(product.price / 100).toFixed(product.price % 100 === 0 ? 0 : 2)}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs text-neutral-500 font-mono mb-3">{product.category}</p>
 
-                      <div className="flex items-center justify-between mt-4">
-                        <div className="flex items-center gap-3">
-                          {product.type === 'affiliate' ? (
-                            <a
-                              href={product.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-xs font-mono text-primary underline underline-offset-4 hover:text-accent transition-colors"
-                            >
-                              buy it &rarr;
-                            </a>
-                          ) : (
-                            <span className="text-xs font-mono text-muted">
-                              checkout coming soon
-                            </span>
-                          )}
-                          <div className="flex gap-1.5">
-                            {product.tags.map(tag => (
-                              <span key={tag} className="text-[10px] font-mono text-muted px-1.5 py-0.5 bg-bg border border-border rounded">
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
+                        {/* Why I like it */}
+                        <p className="text-sm text-neutral-700 leading-relaxed mb-4">{product.whyILikeIt}</p>
+
+                        {/* Why recommended */}
+                        <div className="p-3 bg-neutral-50 rounded-lg border border-neutral-200 mb-4">
+                          <p className="text-[10px] font-mono text-neutral-400 mb-1">why the algorithm surfaced this</p>
+                          <p className="text-[12px] text-neutral-600 leading-relaxed">{product.recommendedBecause}</p>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-mono text-muted">
-                            {product.type}
-                          </span>
-                          {product.signalSource && (
-                            <span className="text-[10px] font-mono text-muted">
-                              via {product.signalSource}
+
+                        {/* Tags */}
+                        <div className="flex flex-wrap gap-1.5 mb-4">
+                          {product.tags.map(tag => (
+                            <span key={tag} className="text-[10px] font-mono text-neutral-400 px-2 py-0.5 bg-neutral-100 rounded-full">
+                              {tag}
                             </span>
-                          )}
+                          ))}
                         </div>
+
+                        {/* CTA */}
+                        <a
+                          href={product.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block w-full text-center text-sm font-medium bg-neutral-900 text-white py-2.5 rounded-lg hover:bg-neutral-800 transition-colors"
+                        >
+                          {product.price > 0 ? 'view product' : 'watch / read'} &rarr;
+                        </a>
+
+                        <p className="text-[10px] font-mono text-neutral-400 text-center mt-2">
+                          {product.type === 'affiliate' ? 'links to retailer' : 'direct purchase'} &middot; {product.signalSource}
+                        </p>
                       </div>
-                    </div>
+                    </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>
