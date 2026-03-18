@@ -392,12 +392,9 @@ export default function Home() {
       <section className="border border-border rounded-lg p-6 bg-surface">
         <h2 className="text-sm font-medium mb-2">Build yours free</h2>
         <p className="text-xs text-subtle leading-relaxed mb-4">
-          This is open source because the interesting part is the idea, not the store. The code
-          does not matter. What matters is the inversion: what happens when you stop letting
-          algorithms sell to you and start building algorithms that understand you? Every
-          platform captures your signal and sells it back to you as ads. This runs the same
-          process in reverse. Fork the repo, point it at your own data, and find out what your
-          algorithm recommends when it is working for you instead of against you.
+          It runs as a website. You can keep it private, use it as a personal reference
+          for what you own and what you might want next. Maybe one day you can share it
+          with friends.
         </p>
 
         <div className="space-y-3 mb-6">
