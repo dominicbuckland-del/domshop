@@ -48,9 +48,15 @@ export default function Home() {
           could seek to reclaim ownership over their data and identity in an increasingly
           AI-dominated future. Nothing here is actually for sale.
         </p>
-        <div className="flex gap-3 mt-4 text-[11px] font-mono text-muted">
-          <Link href="/about" className="hover:text-primary transition-colors underline underline-offset-4">about</Link>
-          <Link href="/guide" className="hover:text-primary transition-colors underline underline-offset-4">build your own</Link>
+        <div className="flex items-center gap-4 mt-4">
+          <div className="flex items-center gap-3 text-[11px] font-mono text-muted">
+            <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> own</span>
+            <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-amber-400" /> want</span>
+          </div>
+          <div className="flex gap-3 text-[11px] font-mono text-muted">
+            <Link href="/about" className="hover:text-primary transition-colors underline underline-offset-4">about</Link>
+            <Link href="/guide" className="hover:text-primary transition-colors underline underline-offset-4">build your own</Link>
+          </div>
         </div>
       </header>
 
@@ -190,7 +196,8 @@ export default function Home() {
                       />
                     </div>
                     <div className="min-w-0">
-                      <div className="flex items-baseline gap-2">
+                      <div className="flex items-center gap-2">
+                        <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${product.ownership === 'own' ? 'bg-emerald-500' : 'bg-amber-400'}`} title={product.ownership === 'own' ? 'I own this' : 'I want this'} />
                         <span className="text-sm font-medium text-primary">{product.name}</span>
                         <span className="text-[10px] font-mono text-muted">{product.category}</span>
                       </div>
