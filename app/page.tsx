@@ -129,7 +129,7 @@ export default function Home() {
       <section className="pt-24 md:pt-32 pb-6 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-[56px] md:text-[80px] lg:text-[96px] font-semibold tracking-[-0.03em] leading-[1.0] text-primary">
-            {user ? `${user.email?.split('@')[0]}.` : 'Advertise to yourself.'}
+            {user ? `${user.email?.split('@')[0]}.` : 'Your taste. Your data. Your store.'}
           </h1>
           <p className="text-[17px] md:text-[19px] text-subtle mt-6 leading-[1.6] max-w-2xl mx-auto">
             This is both a functional app and a creative commentary on data, privacy and identity.
