@@ -323,7 +323,7 @@ export default function Home() {
                             </div>
                           ) : feedbackId === product.id ? (
                             <div onClick={(e) => e.stopPropagation()}>
-                              <p className="text-[10px] font-mono text-neutral-400 mb-2">teach the algorithm</p>
+                              <p className="text-[10px] font-mono text-neutral-400 mb-2">teach your algorithm</p>
                               <textarea
                                 value={feedbackText}
                                 onChange={(e) => setFeedbackText(e.target.value)}
@@ -352,7 +352,7 @@ export default function Home() {
                               onClick={(e) => { e.stopPropagation(); setFeedbackId(product.id) }}
                               className="w-full text-left"
                             >
-                              <p className="text-[10px] font-mono text-neutral-400 mb-0.5">teach the algorithm</p>
+                              <p className="text-[10px] font-mono text-neutral-400 mb-0.5">teach your algorithm</p>
                               <p className="text-[11px] text-neutral-500">Wrong recommendation? Click to correct it. Your feedback trains the next version.</p>
                             </button>
                           )}
