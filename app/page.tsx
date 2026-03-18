@@ -25,17 +25,28 @@ export default function Home() {
       <header className="mb-12">
         <div className="flex items-baseline justify-between">
           <h1 className="text-2xl font-medium tracking-tight">dom.shop</h1>
-          <button
-            onClick={() => setShowAlgorithm(!showAlgorithm)}
-            className="text-[11px] font-mono text-muted hover:text-primary border border-border px-2.5 py-1 rounded-full transition-all hover:border-muted"
-          >
-            algorithm
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setShowAlgorithm(!showAlgorithm)}
+              className="text-[11px] font-mono text-muted hover:text-primary border border-border px-2.5 py-1 rounded-full transition-all hover:border-muted"
+            >
+              algorithm
+            </button>
+            <a
+              href="https://github.com/dominicbuckland-del/domshop"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] font-mono bg-accent text-white px-2.5 py-1 rounded-full transition-all hover:bg-primary"
+            >
+              build your own
+            </a>
+          </div>
         </div>
         <p className="text-sm text-muted mt-3 leading-relaxed max-w-lg">
-          I built this store to practice with Claude and explore hyper-personalisation for my thesis.
-          It consists of things I buy, use and want to buy based on an algorithm which examines my
-          own life in real time.
+          An open-source experiment in using personal data to understand what you actually need --
+          not what an ad tells you to want. This is my life, examined by an algorithm I built,
+          surfacing objects that genuinely fit how I live. The opposite of consumer culture.
+          The code is yours to fork.
         </p>
       </header>
 
@@ -56,11 +67,12 @@ export default function Home() {
               </div>
 
               <p className="text-xs text-subtle leading-relaxed mb-6">
-                I photographed everything I own, catalogued it, and built a recommendation engine
-                that watches my actual life. It pulls from {algorithmStats.liveSources} live data sources,
-                cross-references {algorithmStats.totalDataPoints} data points, and surfaces products I
-                would probably buy based on what I already own, what I do, and how I spend my time.
-                The store updates itself. I just approve or reject what the algorithm finds.
+                Most recommendation engines exist to sell you things. This one exists to understand
+                a single person. I photographed everything I own, catalogued it, and connected
+                {' '}{algorithmStats.liveSources} live data sources that watch how I actually live -- not
+                what I click on. The goal is not consumption. It is self-awareness through objects:
+                what do I reach for, what gathers dust, and what does that say about what I should
+                own next? The entire system is open source. Fork it and point it at your own life.
               </p>
 
               {/* Stats */}
@@ -108,9 +120,10 @@ export default function Home() {
 
               <div className="mt-4 pt-4 border-t border-border">
                 <p className="text-[10px] font-mono text-muted leading-relaxed">
-                  The algorithm runs a weighted scoring model across all sources. Products are surfaced
-                  when confidence exceeds 70%. I manually approve every item before it appears here.
-                  Nothing is sponsored. The data is mine. The recommendations are for me.
+                  The algorithm runs a weighted scoring model across all sources. Products surface
+                  when confidence exceeds 70%. I manually approve every item. Nothing is sponsored.
+                  No affiliate revenue. No tracking pixels. The data is mine, the code is open,
+                  and the point is to prove that personalisation can serve the person -- not the platform.
                 </p>
               </div>
             </div>
@@ -242,75 +255,67 @@ export default function Home() {
 
       {/* Build your own */}
       <section className="mt-16 border border-border rounded-lg p-6 bg-surface">
-        <h2 className="text-sm font-medium mb-2">Want your own?</h2>
+        <h2 className="text-sm font-medium mb-2">Build your own</h2>
         <p className="text-xs text-subtle leading-relaxed mb-4">
-          I built this in a single session with Claude Code. The entire store -- algorithm, data pipeline
-          documentation, product curation, deployment -- was built conversationally by describing what
-          I wanted and having an AI build it in real time. You can do the same thing.
+          This is open source because the point is the idea, not the product. What happens
+          when you stop letting algorithms sell to you and start building algorithms that
+          understand you? Fork the repo, point it at your own data, and find out.
         </p>
 
         <div className="space-y-3 mb-6">
           <div className="flex gap-3">
             <span className="text-[10px] font-mono text-muted w-8 flex-shrink-0 pt-0.5">01</span>
             <div>
-              <p className="text-xs font-medium">Install Claude Code</p>
+              <p className="text-xs font-medium">Fork and clone</p>
               <p className="text-[11px] text-muted mt-0.5">
-                <code className="bg-bg px-1.5 py-0.5 rounded border border-border font-mono">npm i -g @anthropic-ai/claude-code</code> then run <code className="bg-bg px-1.5 py-0.5 rounded border border-border font-mono">claude</code> in your terminal.
+                <code className="bg-bg px-1.5 py-0.5 rounded border border-border font-mono">git clone github.com/dominicbuckland-del/domshop</code> -- the entire codebase is yours. MIT licensed.
               </p>
             </div>
           </div>
           <div className="flex gap-3">
             <span className="text-[10px] font-mono text-muted w-8 flex-shrink-0 pt-0.5">02</span>
             <div>
-              <p className="text-xs font-medium">Describe your store</p>
+              <p className="text-xs font-medium">Replace the data with your life</p>
               <p className="text-[11px] text-muted mt-0.5">
-                Tell Claude what you want: your niche, your products, your aesthetic. It builds the entire Next.js site, Tailwind styling, and deploys to Vercel.
+                Edit <code className="bg-bg px-1.5 py-0.5 rounded border border-border font-mono">data/products.ts</code> with things you own. Edit <code className="bg-bg px-1.5 py-0.5 rounded border border-border font-mono">data/algorithm.ts</code> with your data sources. Photograph your stuff. Be honest about what you actually use.
               </p>
             </div>
           </div>
           <div className="flex gap-3">
             <span className="text-[10px] font-mono text-muted w-8 flex-shrink-0 pt-0.5">03</span>
             <div>
-              <p className="text-xs font-medium">Add your data sources</p>
+              <p className="text-xs font-medium">Connect your signals</p>
               <p className="text-[11px] text-muted mt-0.5">
-                Connect your Strava, Spotify, bookmarks, purchase history -- whatever signals make sense for your life. The algorithm is just a weighted scoring model you describe in plain English.
+                Strava, Spotify, screen time, purchase history -- whatever data reflects how you actually live. The algorithm is just a mirror. The more honest the inputs, the more useful the outputs.
               </p>
             </div>
           </div>
           <div className="flex gap-3">
             <span className="text-[10px] font-mono text-muted w-8 flex-shrink-0 pt-0.5">04</span>
             <div>
-              <p className="text-xs font-medium">Ship it</p>
+              <p className="text-xs font-medium">Deploy for free</p>
               <p className="text-[11px] text-muted mt-0.5">
-                Claude deploys to Vercel for free. Point your domain. Done. Total cost: $0 for hosting, ~$15 for a domain.
+                <code className="bg-bg px-1.5 py-0.5 rounded border border-border font-mono">vercel deploy</code> -- free hosting, free SSL, instant. Or use Claude Code to build and deploy conversationally.
               </p>
             </div>
           </div>
         </div>
 
-        <div className="flex gap-3">
-          <a
-            href="mailto:dom@dombuckland.com?subject=Build me a dom.shop&body=Hey Dom, I want my own curated store. Here's what I'm into:"
-            className="text-xs font-mono bg-accent text-white px-4 py-2 rounded-full hover:bg-primary transition-colors"
-          >
-            get Dom to build yours
-          </a>
-          <a
-            href="https://github.com/dominicbuckland-del/domshop"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs font-mono text-muted border border-border px-4 py-2 rounded-full hover:text-primary hover:border-muted transition-colors"
-          >
-            fork the repo
-          </a>
-        </div>
+        <a
+          href="https://github.com/dominicbuckland-del/domshop"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs font-mono bg-accent text-white px-4 py-2 rounded-full hover:bg-primary transition-colors inline-block"
+        >
+          view source on github
+        </a>
       </section>
 
       {/* Footer */}
       <footer className="mt-10 pt-8 border-t border-border">
-        <p className="text-xs text-muted">
-          {products.length} items. Algorithm-surfaced, manually approved.
-          Built with Claude Code as part of a thesis on hyper-personalised commerce.
+        <p className="text-xs text-muted leading-relaxed">
+          {products.length} items. Algorithm-surfaced, manually approved. Open source.
+          Built to explore whether personalisation can serve people instead of platforms.
         </p>
       </footer>
     </div>
