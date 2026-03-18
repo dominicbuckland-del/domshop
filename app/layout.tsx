@@ -20,7 +20,7 @@ const geistMono = localFont({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://dom-shop-au.vercel.app'),
+  metadataBase: new URL('https://identity.shop'),
   title: 'iDentity',
   description: 'Your data. Your algorithm. Your store. An inversion of the global advertising model.',
   manifest: '/manifest.json',
